@@ -1,3 +1,10 @@
+<?php
+session_start(); // Mulai session
+require_once("koneksi.php");
+error_reporting(0);
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -40,7 +47,7 @@
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.html">
+          <a class="navbar-brand" href="index.php">
             <span>
               Sekolah SD
             </span>
@@ -54,7 +61,7 @@
             <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
               <ul class="navbar-nav  ">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.html"> Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="index.php"> Home <span class="sr-only">(current)</span></a>
                 </li>
 
                 <!-- <li class="nav-item ">
@@ -66,11 +73,11 @@
                 </li> -->
 
                 <li class="nav-item">
-                  <a class="call_to-btn btn_white-border mx-4" href="register.html"> Register </a>
+                  <a class="call_to-btn btn_white-border mx-4" href="register.php"> Register </a>
                 </li>
 
                 <li class="nav-item">
-                  <a class="call_to-btn btn_white-border" href="login.html">Login</a>
+                  <a class="call_to-btn btn_white-border" href="login.php">Login</a>
                 </li>
 
               </ul>
@@ -82,8 +89,6 @@
   </div>
   <!-- end header section -->
 
-
-
   <!-- contact section -->
 
   <section class="contact_section ">
@@ -94,38 +99,30 @@
         <div class="col-md-6">
           <div class="d-flex justify-content-center d-md-block">
             <h2>
-              Buat Akun
+              Login
             </h2>
           </div>
-          <form action="">
+          <form action="login_account.php" method="POST">
             <div class="contact_form-container">
               <div>
                 <div>
-                  <input type="text" placeholder="Name">
+                  <input type="email" name="email" placeholder="Email" required>
                 </div>
                 <div>
-                  <input type="email" placeholder="Email">
-                </div>
-                <div>
-                  <input type="password" placeholder="Password">
-                </div>
-                <div>
-                  <input type="password" placeholder="Komfirmasi Password">
+                  <input type="password" name="password" placeholder="Password" required>
                 </div>
                 <div class="mt-5">
                   <button type="submit">
-                    Daftar
+                    Login
                   </button>
                 </div>
               </div>
-
             </div>
-
           </form>
         </div>
         <div class="col-md-6">
           <div class="contact_img-box">
-            <img src="images/students.jpg" alt="">
+            <img src="images/determine.png" alt="">
           </div>
         </div>
       </div>

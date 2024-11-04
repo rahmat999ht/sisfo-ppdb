@@ -1,200 +1,111 @@
--- phpMyAdmin SQL Dump
--- version 5.0.2
--- https://www.phpmyadmin.net/
---
--- Host: localhost
--- Generation Time: Sep 21, 2020 at 07:38 AM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.8
-
+-- Mengatur pengaturan dasar
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
--- Atur charset dan collation
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
--- --------------------------------------------------------
--- Database: `karyawansi`
--- --------------------------------------------------------
-
---
--- Table structure for table `tb_mahasiswa`
---
-
-CREATE TABLE `tb_mahasiswa` (
-  `id_mahasiswa` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `tmp_tgl_lahir` varchar(255) NOT NULL,
-  `jenkel` ENUM('Laki-laki', 'Perempuan') NOT NULL,
-  `agama` varchar(255) NOT NULL,
-  `alamat` text NOT NULL,
-  `no_tel` varchar(18) NOT NULL,
-  `foto` varchar(50) NOT NULL,
-  PRIMARY KEY (`id_mahasiswa`)  -- Tambahkan primary key
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Insert data ke tb_mahasiswa
-INSERT INTO `tb_mahasiswa` (`id_mahasiswa`, `username`, `password`, `nama`, `tmp_tgl_lahir`, `jenkel`, `agama`, `alamat`, `no_tel`, `foto`) VALUES
-(220001, 'Abdul', 'd41d8cd98f00b204e9800998ecf8427e', 'Abdul Muhlisin Sudirman', 'Klaten / 19-09-1994', 'Laki-laki', 'Islam', 'China', '0895635721923',  '21092020072509employee1.png'),
-(220002, 'sarah', '9e9d7a08e048e9d604b79460b54969c3', 'Sarah Mutia', 'Cianjur / 10-12-1992', 'Perempuan', 'Islam', '', '08128384848', '10092020025112employee3.png'),
-(220003, 'bagas', 'ee776a18253721efe8a62e4abd29dc47', 'bagas a', 'Jakarta / 10-01-1990', 'Laki-laki', 'Islam', 'Jakarta', '0895628383333', '10092020024120employee3.png'),
-(220004, 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'Budi Sanjaya', 'Bekasi / 10-12-1980', 'Laki-laki', 'Kristen', '', '0895254859994', '10092020023942employee1.png');
-
--- --------------------------------------------------------
--- Table structure for table `tb_absensi`
---
-CREATE TABLE `tb_absensi` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) NOT NULL,
-  `tgl_masuk` varchar(255) NOT NULL,
-  `tgl_keluar` varchar(255),
-  `jam_masuk` varchar(255) NOT NULL,
-  `jam_keluar` varchar(255),
-  `long` varchar(50) NOT NULL,
-  `lat` varchar(50) NOT NULL,
-  `id_mahasiswa` int(11) NOT NULL,
-  PRIMARY KEY (`id`),  -- Primary key di tb_absensi
-  INDEX (`id_mahasiswa`),  -- Tambahkan index untuk kolom foreign key
-  CONSTRAINT `fk_tb_absensi_mahasiswa` FOREIGN KEY (`id_mahasiswa`) 
-    REFERENCES `tb_mahasiswa` (`id_mahasiswa`)
-    ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Insert data ke tb_absensi
-INSERT INTO `tb_absensi` (`id`, `id_mahasiswa`, `nama`, `tgl_masuk`, `tgl_keluar`, `jam_masuk`, `jam_keluar`, `long`, `lat`) VALUES
-(16, 220004, 'Budi Sanjaya', '2020-09-10', '2020-09-10', '07:52:25', '17:52:25', '-5.140265823643097', '119.48310235406784'),
-(17, 220002, 'Sarah Mutia', '2020-09-10', '2020-09-10', '07:54:45', '17:54:45', '-5.140265823643097', '119.48310235406784'),
-(18, 220001, 'Abdul Muhlisin Sudirman', '2020-09-20', '2020-09-20', '13:31:05', '17:31:05', '-5.140265823643097', '119.48310235406784');
-
--- --------------------------------------------------------
--- Table structure for table `tb_izin`
---
-CREATE TABLE `tb_izin` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) NOT NULL,
-  `keterangan` ENUM('Sakit', 'Izin', 'Keperluan keluarga') NOT NULL,
-  `alasan` varchar(255) NOT NULL,
-  `waktu` varchar(255) NOT NULL,
-  `id_mahasiswa` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX (`id_mahasiswa`),  -- Tambahkan index untuk kolom foreign key
-  CONSTRAINT `fk_tb_izin_mahasiswa` FOREIGN KEY (`id_mahasiswa`) 
-    REFERENCES `tb_mahasiswa` (`id_mahasiswa`)
-    ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Insert data ke tb_izin
-INSERT INTO `tb_izin` (`id`, `id_mahasiswa`, `nama`, `keterangan`, `alasan`, `waktu`) VALUES
-(16, 220004, 'Budi Sanjaya', 'Sakit', 'Saya Sakit Pak', '2020-09-10 07:52:25'),
-(17, 220002, 'Sarah Mutia', 'Izin', 'Saya harus pergi', '2020-09-10 07:54:45'),
-(18, 220001, 'Abdul Muhlisin Sudirman', 'Izin', 'Keperluan keluarga', '2020-09-20 13:31:05');
-
--- --------------------------------------------------------
--- Table structure for table `tb_pembimbing`
---
-CREATE TABLE `tb_pembimbing` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+-- Tabel Peserta
+CREATE TABLE `peserta` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `no_peserta` INT(11) NOT NULL,
+  `nama` VARCHAR(255) NOT NULL,
+  `foto` VARCHAR(255),
+  `jenis_kelamin` ENUM('Laki-Laki', 'Perempuan') NOT NULL,
+  `tempat_lahir` VARCHAR(100),
+  `tanggal_lahir` TIMESTAMP,
+  `nama_ibu` VARCHAR(255),
+  `nama_ayah` VARCHAR(255),
+  `no_hp_wali` VARCHAR(15),
+  `alamat` VARCHAR(255),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert data ke tb_pembimbing
-INSERT INTO `tb_pembimbing` (`id`, `username`, `password`) VALUES
-(2, 'pembimbing', 'pembimbing'),
-(5, 'pembimbing2', 'pembimbing2');
-
--- --------------------------------------------------------
--- Table structure for table `tb_dokumentasi`
---
-CREATE TABLE `tb_dokumentasi` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) NOT NULL,
-  `asal_kampus` varchar(255) NOT NULL,
-  `bidang_penempatan` varchar(255) NOT NULL,
-  `nama_kegiatan` varchar(255) NOT NULL,
-  `waktu` varchar(255) NOT NULL,
-  `id_mahasiswa` int(11) NOT NULL,
+-- Tabel Hasil Kelulusan
+CREATE TABLE `hasil_kelulusan` (
+  `id` VARCHAR(50) NOT NULL,
+  `keterangan` VARCHAR(255),
+  `status` ENUM('Lulus', 'Tidak Lulus') NOT NULL,
+  `id_peserta` INT(11),
   PRIMARY KEY (`id`),
-  INDEX (`id_mahasiswa`),  -- Tambahkan index untuk kolom foreign key
-  CONSTRAINT `fk_tb_dokumentasi_mahasiswa` FOREIGN KEY (`id_mahasiswa`) 
-    REFERENCES `tb_mahasiswa` (`id_mahasiswa`)
-    ON DELETE CASCADE
+  FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Insert data ke tb_dokumentasi
-INSERT INTO `tb_dokumentasi` (`id`, `id_mahasiswa`, `nama`, `asal_kampus`, `bidang_penempatan`, `nama_kegiatan`, `waktu`) VALUES
-(51, 220001, 'Abdul Muhlisin Sudirman', 'STMIK Indonesia', 'IT Programmer', 'Buat Aplikasi', '2020-09-20');
+-- Tabel Jarak Rumah
+CREATE TABLE `jarak_rumah` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `alamat` VARCHAR(255) NOT NULL,
+  `jarak_rumah` VARCHAR(50),
+  `nama_kecamatan` VARCHAR(100),
+  `nama_kabupaten` VARCHAR(100),
+  `id_peserta` INT(11),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for dumped tables
---
+-- Tabel Admin
+CREATE TABLE `admin` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `emailVerified` DATETIME NULL,
+  `image` VARCHAR(255) NULL,
+  `password` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for table `tb_absensi`
---
-ALTER TABLE `tb_absensi`
-  ADD PRIMARY KEY (`id`);
+-- Tabel Periode Pendaftaran
+CREATE TABLE `periode_pendaftaran` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `status` ENUM('Aktif', 'Tidak Aktif') NOT NULL,
+  `tanggal_selesai` TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-ALTER TABLE `tb_absensi`
-  ADD CONSTRAINT `fk_tb_absensi_mahasiswa` 
-  FOREIGN KEY (`id_mahasiswa`) 
-  REFERENCES `tb_mahasiswa` (`id_mahasiswa`) 
-  ON DELETE CASCADE 
+-- Tabel Account
+CREATE TABLE `account` (
+  `id` VARCHAR(50) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(100) UNIQUE NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `id_peserta` INT(11),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Indexes for table `tb_pembimbing`
---
+-- Menambah data ke tabel `peserta`
+INSERT INTO `peserta` (`no_peserta`, `nama`, `foto`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `nama_ibu`, `nama_ayah`, `no_hp_wali`, `alamat`)
+VALUES 
+(12345, 'Ahmad Suryadi', 'ahmad.jpg', 'Laki-Laki', 'Jakarta', '2001-05-17', 'Siti Aminah', 'Budi Suryadi', '08123456789', 'Jl. Merdeka No. 10, Jakarta'),
+(12346, 'Dewi Lestari', 'dewi.jpg', 'Perempuan', 'Bandung', '2002-08-21', 'Kartini', 'Darma Lestari', '08234567890', 'Jl. Anggrek No. 25, Bandung');
 
-ALTER TABLE `tb_pembimbing`
-  ADD PRIMARY KEY (`id`);
+-- Menambah data ke tabel `hasil_kelulusan`
+INSERT INTO `hasil_kelulusan` (`id`, `keterangan`, `status`, `id_peserta`)
+VALUES 
+('HL001', 'Lulus dengan nilai baik', 'Lulus', 1),
+('HL002', 'Tidak lulus karena tidak memenuhi syarat', 'Tidak Lulus', 2);
 
---
--- Indexes for table `tb_mahasiswa`
---
-ALTER TABLE `tb_mahasiswa`
-  ADD PRIMARY KEY (`id_mahasiswa`);
+-- Menambah data ke tabel `jarak_rumah`
+INSERT INTO `jarak_rumah` (`alamat`, `jarak_rumah`, `nama_kecamatan`, `nama_kabupaten`, `id_peserta`)
+VALUES 
+('Jl. Merdeka No. 10, Jakarta', '5 km', 'Gambir', 'Jakarta Pusat', 1),
+('Jl. Anggrek No. 25, Bandung', '3 km', 'Cicendo', 'Bandung', 2);
 
---
--- Indexes for table `tb_dokumentasi`
---
-ALTER TABLE `tb_dokumentasi`
-  ADD PRIMARY KEY (`id`);
-  ADD CONSTRAINT `fk_tb_dokumentasi_mahasiswa` FOREIGN KEY (`id_mahasiswa`) REFERENCES `tb_mahasiswa` (`id_mahasiswa`) ON DELETE CASCADE ON UPDATE CASCADE;
+-- Menambah data ke tabel `admin`
+INSERT INTO `admin` (`name`, `email`, `emailVerified`, `image`, `password`)
+VALUES 
+('Admin Satu', 'admin1@example.com', '2024-11-04 10:00:00', 'admin1.jpg', 'password123'),
+('Admin Dua', 'admin2@example.com', NULL, 'admin2.jpg', 'password456');
 
---
--- AUTO_INCREMENT for dumped tables
---
+-- Menambah data ke tabel `periode_pendaftaran`
+INSERT INTO `periode_pendaftaran` (`status`, `tanggal_selesai`)
+VALUES 
+('Aktif', '2024-12-31 23:59:59'),
+('Tidak Aktif', '2023-12-31 23:59:59');
 
---
--- AUTO_INCREMENT for table `tb_absensi`
---
-ALTER TABLE `tb_absensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+-- Menambah data ke tabel `account`
+INSERT INTO `account` (`id`, `name`, `email`, `password`, `id_peserta`)
+VALUES 
+('ACC001', 'Ahmad Suryadi', 'ahmad@example.com', 'passAhmad123', 1),
+('ACC002', 'Dewi Lestari', 'dewi@example.com', 'passDewi456', 2);
 
--- Tabel tb_izin dengan FK
-ALTER TABLE `tb_izin`
-  ADD CONSTRAINT `fk_tb_izin_mahasiswa` FOREIGN KEY (`id_mahasiswa`) REFERENCES `tb_mahasiswa` (`id_mahasiswa`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- AUTO_INCREMENT for table `tb_pembimbing`
---
-ALTER TABLE `tb_pembimbing`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `tb_dokumentasi`
---
-ALTER TABLE `tb_dokumentasi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
