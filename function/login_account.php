@@ -1,6 +1,6 @@
 <?php
 
-include_once "koneksi.php";
+include_once "../koneksi.php";
 
 function login($email, $password)
 {
@@ -28,12 +28,12 @@ function login($email, $password)
             $_SESSION['id_user'] = $b['id'];
             $_SESSION['username'] = $b['name']; // Jika ingin tetap menyimpan nama pengguna
             $_SESSION['email'] = $b['email'];
-            echo '<script>alert("Login successful!"); window.location.href="index.php";</script>';
+            echo '<script>alert("Login successful!"); window.location.href="../index.php";</script>';
         } else {
-            echo '<script>alert("Email/Password salah."); window.location.href="login.php";</script>';
+            echo '<script>alert("Email/Password salah."); window.location.href="../login.php";</script>';
         }
     } else {
-        echo '<script>alert("Query Error: ' . mysqli_error($koneksi) . '"); window.location.href="index.php";</script>';
+        echo '<script>alert("Query Error: ' . mysqli_error($koneksi) . '"); window.location.href="../index.php";</script>';
     }
 }
 

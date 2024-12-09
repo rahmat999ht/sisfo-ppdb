@@ -43,103 +43,59 @@ error_reporting(0);
 
 <body class="sub_page">
   <div class="top_container ">
-    <!-- header section strats -->
-    <header class="header_section">
+
+    <?php
+    include 'header.php';
+    ?>
+
+    <!-- contact section -->
+    <section class="contact_section ">
+
       <div class="container">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.php">
-            <span>
-              Sekolah SD
-            </span>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
 
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
-                <li class="nav-item active">
-                  <a class="nav-link" href="index.php"> Home <span class="sr-only">(current)</span></a>
-                </li>
-
-                <!-- <li class="nav-item ">
-                  <a class="nav-link" href="about.html"> About </a>
-                </li>
-
-                <li class="nav-item ">
-                  <a class="nav-link" href="admission.html"> Admission </a>
-                </li> -->
-
-                <li class="nav-item">
-                  <a class="call_to-btn btn_white-border mx-4" href="register.php"> Register </a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="call_to-btn btn_white-border" href="login.php">Login</a>
-                </li>
-
-              </ul>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="d-flex justify-content-center d-md-block">
+              <h2>
+                Buat Akun
+              </h2>
             </div>
-        </nav>
-      </div>
-    </header>
-
-  </div>
-  <!-- end header section -->
-
-
-
-  <!-- contact section -->
-
-  <section class="contact_section ">
-
-    <div class="container">
-
-      <div class="row">
-        <div class="col-md-6">
-          <div class="d-flex justify-content-center d-md-block">
-            <h2>
-              Buat Akun
-            </h2>
-          </div>
-          <form action="register_account.php" method="POST">
-            <div class="contact_form-container">
-              <div>
+            <form action="function/register_account.php" method="POST">
+              <div class="contact_form-container">
                 <div>
-                  <input type="text" name="name" placeholder="Name" required>
-                </div>
-                <div>
-                  <input type="email" name="email" placeholder="Email" required>
-                </div>
-                <div>
-                  <input type="password" name="password" placeholder="Password" required>
-                </div>
-                <div>
-                  <input type="password" name="confirm_password" placeholder="Konfirmasi Password" required>
-                </div>
-                <div class="mt-5">
-                  <button type="submit">
-                    Daftar
-                  </button>
+                  <div>
+                    <input type="text" name="name" placeholder="Name" required>
+                  </div>
+                  <div>
+                    <input type="email" name="email" placeholder="Email" required>
+                  </div>
+                  <div>
+                    <input type="password" name="password" placeholder="Password" required>
+                  </div>
+                  <div>
+                    <input type="password" name="confirm_password" placeholder="Konfirmasi Password" required>
+                  </div>
+                  <div class="mt-5">
+                    <button type="submit">
+                      Daftar
+                    </button>
+                  </div>
                 </div>
               </div>
+            </form>
+
+          </div>
+          <div class="col-md-6">
+            <div class="contact_img-box">
+              <img src="images/students.jpg" alt="">
             </div>
-          </form>
-          
-        </div>
-        <div class="col-md-6">
-          <div class="contact_img-box">
-            <img src="images/students.jpg" alt="">
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
 
 
 </body>

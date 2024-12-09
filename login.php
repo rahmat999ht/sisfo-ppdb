@@ -43,54 +43,12 @@ error_reporting(0);
 
 <body class="sub_page">
   <div class="top_container ">
-    <!-- header section strats -->
-    <header class="header_section">
-      <div class="container">
-        <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="index.php">
-            <span>
-              Sekolah SD
-            </span>
-          </a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-              <ul class="navbar-nav  ">
-                <li class="nav-item active">
-                  <a class="nav-link" href="index.php"> Home <span class="sr-only">(current)</span></a>
-                </li>
-
-                <!-- <li class="nav-item ">
-                  <a class="nav-link" href="about.html"> About </a>
-                </li>
-
-                <li class="nav-item ">
-                  <a class="nav-link" href="admission.html"> Admission </a>
-                </li> -->
-
-                <li class="nav-item">
-                  <a class="call_to-btn btn_white-border mx-4" href="register.php"> Register </a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="call_to-btn btn_white-border" href="login.php">Login</a>
-                </li>
-
-              </ul>
-            </div>
-        </nav>
-      </div>
-    </header>
-
+    <?php
+    include 'header.php';
+    ?>
   </div>
-  <!-- end header section -->
 
   <!-- contact section -->
-
   <section class="contact_section ">
 
     <div class="container">
@@ -102,7 +60,7 @@ error_reporting(0);
               Login
             </h2>
           </div>
-          <form action="login_account.php" method="POST">
+          <form action="function/login_account.php" method="POST">
             <div class="contact_form-container">
               <div>
                 <div>

@@ -1,8 +1,8 @@
 <?php
-// register.php
+// ../register.php
 
 // Sertakan file koneksi
-require_once 'koneksi.php';
+require_once '../koneksi.php';
 
 // Fungsi untuk menyimpan data registrasi
 function registerAccount($name, $email, $password) {
@@ -15,7 +15,7 @@ function registerAccount($name, $email, $password) {
 
     // Validasi email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script>alert("Email tidak valid."); window.location.href="register.php";</script>';
+        echo '<script>alert("Email tidak valid."); window.location.href="../register.php";</script>';
         return;
     }
 
@@ -23,7 +23,7 @@ function registerAccount($name, $email, $password) {
     $cek_email = "SELECT * FROM account WHERE email = '$email'";
     $result = mysqli_query($koneksi, $cek_email);
     if (mysqli_num_rows($result) > 0) {
-        echo '<script>alert("Email sudah terdaftar."); window.location.href="register.php";</script>';
+        echo '<script>alert("Email sudah terdaftar."); window.location.href="../register.php";</script>';
         return;
     }
 
@@ -47,9 +47,9 @@ function registerAccount($name, $email, $password) {
 
     // Eksekusi query
     if (mysqli_stmt_execute($stmt)) {
-        echo '<script>alert("Registrasi berhasil!"); window.location.href="login.php";</script>';
+        echo '<script>alert("Registrasi berhasil!"); window.location.href="../login.php";</script>';
     } else {
-        echo '<script>alert("Registrasi gagal: ' . mysqli_stmt_error($stmt) . '"); window.location.href="register.php";</script>';
+        echo '<script>alert("Registrasi gagal: ' . mysqli_stmt_error($stmt) . '"); window.location.href="../register.php";</script>';
     }
 
     // Tutup statement
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validasi input dasar
     if (empty($name) || empty($email) || empty($password)) {
-        echo '<script>alert("Semua field harus diisi."); window.location.href="register.php";</script>';
+        echo '<script>alert("Semua field harus diisi."); window.location.href="../register.php";</script>';
     } else {
         // Panggil fungsi registrasi
         registerAccount($name, $email, $password);

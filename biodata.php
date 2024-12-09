@@ -3,8 +3,34 @@ session_start(); // Mulai session
 require_once("koneksi.php");
 error_reporting(0);
 
-?>
+$id_login = $_SESSION['id_user']; // Ambil id_login dari session
 
+// Periksa apakah pengguna sudah login
+if (!$id_login) {
+    echo '<script>alert("Anda harus login terlebih dahulu."); window.location.href="login.php";</script>';
+    exit;
+}
+
+// Ambil data id_peserta dari tabel account
+$queryAccount = $koneksi->prepare("SELECT id_peserta FROM account WHERE id = ?");
+$queryAccount->bind_param("i", $id_login);
+$queryAccount->execute();
+$resultAccount = $queryAccount->get_result();
+$rowAccount = $resultAccount->fetch_assoc();
+
+$id_peserta = $rowAccount['id_peserta'] ?? null;
+
+$formData = null;
+
+// Jika id_peserta tidak null, ambil data dari tabel peserta
+if ($id_peserta) {
+    $queryPeserta = $koneksi->prepare("SELECT * FROM peserta WHERE id = ?");
+    $queryPeserta->bind_param("i", $id_peserta);
+    $queryPeserta->execute();
+    $resultPeserta = $queryPeserta->get_result();
+    $formData = $resultPeserta->fetch_assoc();
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -15,173 +41,114 @@ error_reporting(0);
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <!-- Mobile Metas -->
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-
   <title>Sekolah SD</title>
-
-
-
-  <!-- bootstrap core css -->
+  <!-- CSS dan Font -->
   <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-  <!-- progress barstle -->
   <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-  <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,600&display=swap" rel="stylesheet">
-  <!-- font wesome stylesheet -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <!-- Custom styles for this template -->
   <link href="css/style.css" rel="stylesheet" />
-  <!-- responsive style -->
   <link href="css/responsive.css" rel="stylesheet" />
-
-
-
-
-  <link rel="stylesheet" href="css/css-circular-prog-bar.css">
-
-
 </head>
 
 <body class="sub_page">
   <div class="top_container ">
-  <!-- header section strats -->
-  <header class="header_section">
-    <div class="container">
-      <nav class="navbar navbar-expand-lg custom_nav-container ">
-        <a class="navbar-brand" href="index.php">
-          <span>
-            Sekolah SD
-          </span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
-            <ul class="navbar-nav  ">
-              <li class="nav-item active">
-                <a class="nav-link" href="index.php"> Home <span class="sr-only">(current)</span></a>
-              </li>
-              <?php if (isset($_SESSION['id_user'])): ?>
-                <!-- Cek jika session username ada -->
-
-                <li class="nav-item ">
-                  <a class="nav-link" href="pengumuman.php"> Pengumuman </a>
-                </li>
-
-                <li class="nav-item ">
-                  <a class="nav-link" href="biodata.php"> Biodata </a>
-                </li>
-
-                <!-- Dropdown Info Profil dan Log Out -->
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="logout_account.php">Log Out</a>
-                  </div>
-                </li>
-              <?php else: ?>
-                <li class="nav-item">
-                  <a class="call_to-btn btn_white-border mx-4" href="register.php"> Register </a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="call_to-btn btn_white-border" href="login.php">Login</a>
-                </li>
-              <?php endif; ?>
-
-            </ul>
-          </div>
-      </nav>
-    </div>
-  </header>
-
+    <?php include 'header.php'; ?>
   </div>
-  <!-- end header section -->
 
   <div class="common_style">
-
-
-
-    <!-- admission section -->
     <section class="admission_section">
       <div class="container">
         <h2>Formulir Biodata</h2>
-        <form action="submit_biodata.php" method="post">
+        <form action="function/submit_bio.php" method="post" enctype="multipart/form-data">
+          <!-- Preview Foto -->
+          <div class="form-group">
+            <label for="preview">Preview Foto:</label>
+            <img id="preview" src="<?= $formData['foto'] ?? 'images/blank.png'; ?>" alt="Preview Foto" style="max-width: 200px; display: block; border: 1px solid #ccc; padding: 5px;" />
+          </div>
+
+          <!-- Input Foto -->
+          <div class="form-group">
+            <label for="foto">Foto:</label>
+            <input type="file" id="foto" name="foto" class="form-control" accept="image/*" <?= $id_peserta ? '' : 'required'; ?>>
+          </div>
+
           <!-- Nama Lengkap -->
           <div class="form-group">
             <label for="nama">Nama Lengkap:</label>
-            <input type="text" id="nama" name="nama" class="form-control" required>
+            <input type="text" id="nama" name="nama" class="form-control" value="<?= $formData['nama'] ?? ''; ?>" <?= $id_peserta ? 'readonly' : 'required'; ?>>
           </div>
 
           <!-- Tempat Lahir -->
           <div class="form-group">
             <label for="tempat_lahir">Tempat Lahir:</label>
-            <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control" required>
+            <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-control" value="<?= $formData['tempat_lahir'] ?? ''; ?>" <?= $id_peserta ? 'readonly' : 'required'; ?>>
           </div>
 
           <!-- Tanggal Lahir -->
           <div class="form-group">
             <label for="tanggal_lahir">Tanggal Lahir:</label>
-            <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" required>
+            <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-control" value="<?= $formData['tanggal_lahir'] ?? ''; ?>" <?= $id_peserta ? 'readonly' : 'required'; ?>>
           </div>
 
           <!-- Jenis Kelamin -->
           <div class="form-group">
             <label for="jenis_kelamin">Jenis Kelamin:</label>
-            <select id="jenis_kelamin" name="jenis_kelamin" class="form-control" required>
+            <select id="jenis_kelamin" name="jenis_kelamin" class="form-control" <?= $id_peserta ? 'disabled' : 'required'; ?>>
               <option value="">Pilih Jenis Kelamin</option>
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
+              <option value="Laki-laki" <?= isset($formData['jenis_kelamin']) && $formData['jenis_kelamin'] === 'Laki-laki' ? 'selected' : ''; ?>>Laki-laki</option>
+              <option value="Perempuan" <?= isset($formData['jenis_kelamin']) && $formData['jenis_kelamin'] === 'Perempuan' ? 'selected' : ''; ?>>Perempuan</option>
             </select>
           </div>
 
           <!-- Nama Ibu -->
           <div class="form-group">
             <label for="nama_ibu">Nama Ibu:</label>
-            <input type="text" id="nama_ibu" name="nama_ibu" class="form-control" required>
+            <input type="text" id="nama_ibu" name="nama_ibu" class="form-control" value="<?= $formData['nama_ibu'] ?? ''; ?>" <?= $id_peserta ? 'readonly' : 'required'; ?>>
           </div>
 
           <!-- Nama Ayah -->
           <div class="form-group">
             <label for="nama_ayah">Nama Ayah:</label>
-            <input type="text" id="nama_ayah" name="nama_ayah" class="form-control" required>
-          </div>
-
-          <!-- Alamat -->
-          <div class="form-group">
-            <label for="alamat">Alamat:</label>
-            <textarea id="alamat" name="alamat" class="form-control" rows="3" required></textarea>
+            <input type="text" id="nama_ayah" name="nama_ayah" class="form-control" value="<?= $formData['nama_ayah'] ?? ''; ?>" <?= $id_peserta ? 'readonly' : 'required'; ?>>
           </div>
 
           <!-- Nomor Telepon -->
           <div class="form-group">
             <label for="no_telepon">No.HP Wali:</label>
-            <input type="tel" id="no_telepon" name="no_telepon" class="form-control" pattern="[0-9]{10,12}" required>
+            <input type="tel" id="no_telepon" name="no_telepon" class="form-control" value="<?= $formData['no_hp_wali'] ?? ''; ?>" <?= $id_peserta ? 'readonly' : 'required'; ?>>
+          </div>
+
+          <!-- Alamat -->
+          <div class="form-group">
+            <label for="alamat">Alamat:</label>
+            <textarea id="alamat" name="alamat" class="form-control" rows="3" <?= $id_peserta ? 'readonly' : 'required'; ?>><?= $formData['alamat'] ?? ''; ?></textarea>
           </div>
 
           <!-- Tombol Submit -->
-          <a type="submit" class="call_to-btn btn_white-border">Kirim Biodata</a>
+          <?php if (!$id_peserta) : ?>
+            <button type="submit" class="call_to-btn btn_white-border">Kirim Biodata</button>
+          <?php else : ?>
+            <p>Data Anda sudah terisi. Perubahan hanya dapat dilakukan oleh admin.</p>
+          <?php endif; ?>
         </form>
       </div>
     </section>
-
-    <!-- end admission section -->
-
   </div>
 
-  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.js"></script>
-
-
+  <script>
+    document.getElementById("foto").addEventListener("change", function(event) {
+      const file = event.target.files[0];
+      const preview = document.getElementById("preview");
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.src = "images/blank.png";
+      }
+    });
+  </script>
 </body>
-
 </html>
