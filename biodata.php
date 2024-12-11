@@ -7,13 +7,12 @@ $id_login = $_SESSION['id_user']; // Ambil id_login dari session
 
 // Periksa apakah pengguna sudah login
 if (!$id_login) {
-    echo '<script>alert("Anda harus login terlebih dahulu."); window.location.href="login.php";</script>';
-    exit;
+  echo '<script>alert("Anda harus login terlebih dahulu."); window.location.href="login.php";</script>';
+  exit;
 }
-
-// Ambil data id_peserta dari tabel account
+// Ambil data id_peserta dari tabel account dengan prepared statement
 $queryAccount = $koneksi->prepare("SELECT id_peserta FROM account WHERE id = ?");
-$queryAccount->bind_param("i", $id_login);
+$queryAccount->bind_param("s", $id_login); // Gunakan "s" karena id_user kemungkinan string
 $queryAccount->execute();
 $resultAccount = $queryAccount->get_result();
 $rowAccount = $resultAccount->fetch_assoc();
@@ -24,11 +23,12 @@ $formData = null;
 
 // Jika id_peserta tidak null, ambil data dari tabel peserta
 if ($id_peserta) {
-    $queryPeserta = $koneksi->prepare("SELECT * FROM peserta WHERE id = ?");
-    $queryPeserta->bind_param("i", $id_peserta);
-    $queryPeserta->execute();
-    $resultPeserta = $queryPeserta->get_result();
-    $formData = $resultPeserta->fetch_assoc();
+  // echo $id_peserta;
+  $queryPeserta = $koneksi->prepare("SELECT * FROM peserta WHERE id = ?");
+  $queryPeserta->bind_param("i", $id_peserta);
+  $queryPeserta->execute();
+  $resultPeserta = $queryPeserta->get_result();
+  $formData = $resultPeserta->fetch_assoc();
 }
 ?>
 
@@ -150,5 +150,9 @@ if ($id_peserta) {
       }
     });
   </script>
+
+  <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
+
 </html>

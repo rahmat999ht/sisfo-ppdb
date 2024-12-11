@@ -31,7 +31,7 @@ function registerAccount($name, $email, $password) {
     $hashedPassword = md5($password);
 
     // Query untuk memasukkan data ke tabel `account`
-    $sql = "INSERT INTO account (id, name, email, password) VALUES (?, ?, ?, ?)";
+    $sql = "INSERT INTO account (name, email, password) VALUES (?, ?, ?)";
 
     // Prepare statement
     $stmt = mysqli_prepare($koneksi, $sql);
@@ -39,11 +39,8 @@ function registerAccount($name, $email, $password) {
         die("Error dalam prepare statement: " . mysqli_error($koneksi));
     }
 
-    // Generate ID unik untuk `id` akun
-    $id_account = uniqid("ACC");
-
     // Bind parameter
-    mysqli_stmt_bind_param($stmt, "ssss", $id_account, $name, $email, $hashedPassword);
+    mysqli_stmt_bind_param($stmt, "sss", $id_account, $name, $email, $hashedPassword);
 
     // Eksekusi query
     if (mysqli_stmt_execute($stmt)) {

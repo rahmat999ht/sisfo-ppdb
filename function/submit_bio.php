@@ -52,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Ambil nomor peserta terakhir
         $result = $koneksi->query("SELECT MAX(no_peserta) AS last_no FROM peserta");
         $row = $result->fetch_assoc();
-        $no_peserta = $row['last_no'] ? $row['last_no'] + 1 : 1; // Jika kosong, mulai dari 1
+        $nomor_peserta = $row['last_no'] ? $row['last_no'] + 1 : 1; // Jika kosong, mulai dari 1
+        $no_peserta = str_pad($no_peserta, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan data ke tabel peserta
         $stmtPeserta = $koneksi->prepare("
