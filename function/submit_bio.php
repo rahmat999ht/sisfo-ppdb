@@ -38,7 +38,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit;
         }
 
-        $foto = 'images/' . basename($_FILES['foto']['name']);
+        // Pastikan direktori upload ada dan dapat ditulis
+        $uploadDir = 'images/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true); // Membuat folder jika belum ada
+        }
+
+        $foto = $uploadDir . basename($_FILES['foto']['name']);
         if (!move_uploaded_file($_FILES['foto']['tmp_name'], $foto)) {
             echo '<script>alert("Gagal mengunggah foto."); history.back();</script>';
             exit;
@@ -53,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $result = $koneksi->query("SELECT MAX(no_peserta) AS last_no FROM peserta");
         $row = $result->fetch_assoc();
         $nomor_peserta = $row['last_no'] ? $row['last_no'] + 1 : 1; // Jika kosong, mulai dari 1
-        $no_peserta = str_pad($no_peserta, 3, '0', STR_PAD_LEFT);
+        $no_peserta = str_pad($nomor_peserta, 3, '0', STR_PAD_LEFT);
 
         // Tambahkan data ke tabel peserta
         $stmtPeserta = $koneksi->prepare("
