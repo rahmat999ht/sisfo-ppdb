@@ -23,7 +23,7 @@ $statusPeserta = null; // Default null
 
 if ($id_peserta) {
   // Query hasil kelulusan berdasarkan id_peserta
-  $pesertaID = 1;
+  $pesertaID = $id_peserta;
   $queryHK = $koneksi->prepare("SELECT * FROM hasil_kelulusan WHERE id_peserta = ?");
   $queryHK->bind_param("i", $pesertaID);
   $queryHK->execute();
