@@ -19,6 +19,16 @@ CREATE TABLE `peserta` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Tabel Hasil Kelulusan
+CREATE TABLE `hasil_kelulusan` (
+  `id` VARCHAR(50) NOT NULL,
+  `keterangan` VARCHAR(255),
+  `status` ENUM('Lulus', 'Tidak Lulus') NOT NULL,
+  `id_peserta` INT(11),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Tabel Account
 CREATE TABLE `account` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -28,16 +38,6 @@ CREATE TABLE `account` (
   `id_peserta` INT(11),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Tabel Hasil Kelulusan
-CREATE TABLE `hasil_kelulusan` (
-  `id` VARCHAR(50) NOT NULL,
-  `keterangan` VARCHAR(255),
-  `status` ENUM('Lulus', 'Tidak Lulus') NOT NULL,
-  `id_peserta` INT(11),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`id_peserta`) REFERENCES `peserta` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- -- Tabel Jarak Rumah
