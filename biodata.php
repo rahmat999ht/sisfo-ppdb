@@ -30,6 +30,13 @@ if ($id_peserta) {
   $resultPeserta = $queryPeserta->get_result();
   $formData = $resultPeserta->fetch_assoc();
 }
+
+$result = $koneksi->query("SELECT MAX(no_peserta) AS last_no FROM peserta");
+$row = $result->fetch_assoc();
+$no_peserta = $row['last_no'] ? $row['last_no'] + 1 : 1; // Jika kosong, mulai dari 1
+
+// Format nomor peserta menjadi 3 digit
+$formatted_no_peserta = str_pad($no_peserta, 3, '0', STR_PAD_LEFT);
 ?>
 
 <!DOCTYPE html>
@@ -70,6 +77,12 @@ if ($id_peserta) {
           <div class="form-group">
             <label for="foto">Foto:</label>
             <input type="file" id="foto" name="foto" class="form-control" accept="image/*" <?= $id_peserta ? '' : 'required'; ?>>
+          </div>
+
+          <!-- No Peserta -->
+          <div class="form-group">
+            <label for="noPeserta">No Peserta</label>
+            <input type="number" readonly class="form-control" id="noPeserta" name="no_peserta" value="<?php echo $pesertaData['no_peserta'] ?? $formatted_no_peserta; ?>" required>
           </div>
 
           <!-- Nama Lengkap -->

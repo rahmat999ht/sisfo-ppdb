@@ -71,8 +71,8 @@ CREATE TABLE `periode_pendaftaran` (
 -- Menambah data ke tabel `peserta`
 INSERT INTO `peserta` (`no_peserta`, `nama`, `foto`, `jenis_kelamin`, `tempat_lahir`, `tanggal_lahir`, `nama_ibu`, `nama_ayah`, `no_hp_wali`, `alamat`)
 VALUES 
-(12345, 'Ahmad Suryadi', 'ahmad.jpg', 'Laki-Laki', 'Jakarta', '2001-05-17', 'Siti Aminah', 'Budi Suryadi', '08123456789', 'Jl. Merdeka No. 10, Jakarta'),
-(12346, 'Dewi Lestari', 'dewi.jpg', 'Perempuan', 'Bandung', '2002-08-21', 'Kartini', 'Darma Lestari', '08234567890', 'Jl. Anggrek No. 25, Bandung');
+('001', 'Ahmad Suryadi', 'ahmad.jpg', 'Laki-Laki', 'Jakarta', '2001-05-17', 'Siti Aminah', 'Budi Suryadi', '08123456789', 'Jl. Merdeka No. 10, Jakarta'),
+('002', 'Dewi Lestari', 'dewi.jpg', 'Perempuan', 'Bandung', '2002-08-21', 'Kartini', 'Darma Lestari', '08234567890', 'Jl. Anggrek No. 25, Bandung');
 
 -- Menambah data ke tabel `hasil_kelulusan`
 INSERT INTO `hasil_kelulusan` (`id`, `keterangan`, `status`, `id_peserta`)
