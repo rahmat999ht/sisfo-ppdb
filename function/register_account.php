@@ -39,8 +39,8 @@ function registerAccount($name, $email, $password) {
         die("Error dalam prepare statement: " . mysqli_error($koneksi));
     }
 
-    // Bind parameter
-    mysqli_stmt_bind_param($stmt, "sss", $id_account, $name, $email, $hashedPassword);
+    // Bind parameter (sesuaikan jumlah parameter dengan placeholder)
+    mysqli_stmt_bind_param($stmt, "sss", $name, $email, $hashedPassword);
 
     // Eksekusi query
     if (mysqli_stmt_execute($stmt)) {
