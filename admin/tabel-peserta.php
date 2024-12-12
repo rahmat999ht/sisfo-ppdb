@@ -90,7 +90,7 @@ if (!$_SESSION['admin_id']) {
                                         $pesertaId = htmlspecialchars($row['id']);
                                         $noPeserta = htmlspecialchars($row['no_peserta']);
                                         $namaPeserta = htmlspecialchars($row['nama']);
-                                        $fotoPeserta = !empty($row['foto']) ? '../images/' . htmlspecialchars($row['foto']) : '../images/blank.png';
+                                        $fotoPeserta = !empty($row['foto']) ? '../../' . htmlspecialchars($row['foto']) : '../images/blank.png';
                                         $jenisKelamin = htmlspecialchars($row['jenis_kelamin']);
                                         $tempatLahir = htmlspecialchars($row['tempat_lahir']);
                                         $tanggalLahir = htmlspecialchars(date('d-m-Y', strtotime($row['tanggal_lahir'])));

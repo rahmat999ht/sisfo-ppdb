@@ -56,6 +56,7 @@ function savePeserta($koneksi)
                 // Update data akun jika ada
                 if ($password || $email) {
                     $queryAccount = "UPDATE account SET 
+                                        name = '$nama_wali', 
                                         email = '$email', 
                                         password = IF('$password' != '', '$password', password)
                                       WHERE id_peserta = $id";

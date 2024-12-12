@@ -28,6 +28,7 @@ if (isset($_GET['id'])) {
 
 $result = $koneksi->query("SELECT MAX(no_peserta) AS last_no FROM peserta");
 $row = $result->fetch_assoc();
+$fotoPeserta = !empty($pesertaData['foto']) ? '../../' . htmlspecialchars($pesertaData['foto']) : '../images/blank.png';
 $no_peserta = $row['last_no'] ? $row['last_no'] + 1 : 1; // Jika kosong, mulai dari 1
 
 // Format nomor peserta menjadi 3 digit
@@ -111,10 +112,7 @@ $formatted_no_peserta = str_pad($no_peserta, 3, '0', STR_PAD_LEFT);
                                     <label for="preview" class="col-sm-2 col-form-label">Preview Foto</label>
                                     <div class="col-sm-10">
                                         <img id="preview"
-                                            src="<?php
-                                                    $fotoPath = isset($pesertaData['foto']) ? '../images/' . $pesertaData['foto'] : '../images/blank.png';
-                                                    echo file_exists($fotoPath) ? $fotoPath : '../images/blank.png';
-                                                    ?>"
+                                            src="<?php echo $fotoPeserta; ?>"
                                             alt="Preview Foto"
                                             style="max-width: 200px; display: block; border: 1px solid #ccc; padding: 5px;" />
                                     </div>
@@ -124,7 +122,7 @@ $formatted_no_peserta = str_pad($no_peserta, 3, '0', STR_PAD_LEFT);
                                 <div class="row mb-3">
                                     <label for="foto" class="col-sm-2 col-form-label">Foto</label>
                                     <div class="col-sm-10">
-                                        <input type="file" id="foto" name="foto" class="form-control" accept="image/*" <?= $id_peserta ? '' : 'required'; ?>>
+                                        <input type="file" id="foto" name="foto" class="form-control" accept="images/*" <?= $id_peserta ? '' : ''; ?>>
                                         <!-- <input type="file" id="foto" name="foto" class="form-control" accept="image/*" <?= $id_peserta ? '' : 'required'; ?>> -->
                                     </div>
                                 </div>
