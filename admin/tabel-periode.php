@@ -73,6 +73,7 @@ if (!$_SESSION['admin_id']) {
                   <tr>
                     <th>No</th>
                     <th>Status</th>
+                    <th>Jadwal Test</th>
                     <th>Tanggal Selesai</th>
                     <th>Aksi</th>
                   </tr>
@@ -89,6 +90,7 @@ if (!$_SESSION['admin_id']) {
                       echo "<tr>";
                       echo "<td>" . $no++ . "</td>";
                       echo "<td>" . $row['status'] . "</td>";
+                      echo "<td>" . date('d-m-Y H:i:s', strtotime($row['jadwal_test'])) . "</td>";
                       echo "<td>" . date('d-m-Y H:i:s', strtotime($row['tanggal_selesai'])) . "</td>";
                       echo "<td>
                                     <a href='form-periode.php?id=" . $row['id'] . "' class='btn btn-warning btn-sm'>Edit</a>

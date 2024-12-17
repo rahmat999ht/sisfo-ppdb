@@ -22,7 +22,7 @@ function login($username, $password)
             session_start();
             $_SESSION['admin_id'] = $b['id'];
             $_SESSION['admin_username'] = $b['username'];
-            echo '<script>alert("Anda berhasil login sebagai"); window.location.href="../index.php";</script>';
+            echo '<script>alert("Anda berhasil login"); window.location.href="../index.php";</script>';
         } else {
             echo '<script>alert("Username/Password salah atau akun Anda belum aktif."); window.location.href="../login_admin.php";</script>';
         }

@@ -100,6 +100,15 @@ if (isset($_GET['id'])) {
                                     </div>
                                 </div>
 
+                                <!-- Field Jadwal Test -->
+                                <div class="row mb-3">
+                                    <label for="jadwalTest" class="col-sm-2 col-form-label">Jadwal Test</label>
+                                    <div class="col-sm-10">
+                                        <input type="datetime-local" class="form-control" id="jadwalTest" name="jadwal_test" value="<?php echo isset($periodeData['jadwal_test']) ? date('Y-m-d\TH:i', strtotime($periodeData['jadwal_test'])) : ''; ?>" required>
+
+                                    </div>
+                                </div>
+
                                 <!-- Tanggal Selesai -->
                                 <div class="row mb-3">
                                     <label for="tanggalSelesai" class="col-sm-2 col-form-label">Tanggal Selesai</label>

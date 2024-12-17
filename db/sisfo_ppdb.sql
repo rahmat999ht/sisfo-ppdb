@@ -105,5 +105,16 @@ VALUES
 ('Ahmad Suryadi', 'ahmad@example.com', 'passAhmad123', 1),
 ('Dewi Lestari', 'dewi@example.com', 'passDewi456', 2);
 
+ALTER TABLE `periode_pendaftaran`
+ADD COLUMN `jadwal_test` TIMESTAMP NULL AFTER `tanggal_selesai`;
+
+UPDATE `periode_pendaftaran`
+SET `jadwal_test` = '2024-12-25 10:00:00'
+WHERE `id` = 1;
+
+UPDATE `periode_pendaftaran`
+SET `jadwal_test` = '2023-12-20 09:00:00'
+WHERE `id` = 2;
+
 
 COMMIT;
