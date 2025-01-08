@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // Pastikan direktori upload ada dan dapat ditulis
-        $uploadDir = 'images/';
+        $uploadDir = '../images/';
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true); // Membuat folder jika belum ada
         }
