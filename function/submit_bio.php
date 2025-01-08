@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             INSERT INTO peserta (no_peserta, nama, foto, jenis_kelamin, tempat_lahir, tanggal_lahir, nama_ibu, nama_ayah, no_hp_wali, alamat)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        $stmtPeserta->bind_param("isssssssss", $no_peserta, $nama, $foto, $jenis_kelamin, $tempat_lahir, $tanggal_lahir, $nama_ibu, $nama_ayah, $no_hp_wali, $alamat);
+        $stmtPeserta->bind_param("ssssssssss", $no_peserta, $nama, $foto, $jenis_kelamin, $tempat_lahir, $tanggal_lahir, $nama_ibu, $nama_ayah, $no_hp_wali, $alamat);
         $stmtPeserta->execute();
 
         // Ambil ID peserta yang baru saja ditambahkan
