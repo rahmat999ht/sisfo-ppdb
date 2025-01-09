@@ -23,10 +23,19 @@ function savePeserta($koneksi)
         $nama_wali = mysqli_real_escape_string($koneksi, $_POST['nama_wali']);
         $email = mysqli_real_escape_string($koneksi, $_POST['email']);
 
+        // Proses upload foto jika ada
         $foto = null;
         if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            // Pastikan foto baru diupload
             $foto = "images/" . basename($_FILES['foto']['name']);
             move_uploaded_file($_FILES['foto']['tmp_name'], "../../" . $foto);
+        } else {
+            // Jika foto tidak diupload, biarkan tetap dengan foto sebelumnya (jika ada)
+            if ($id) {
+                $result = mysqli_query($koneksi, "SELECT foto FROM peserta WHERE id = $id");
+                $row = mysqli_fetch_assoc($result);
+                $foto = $row['foto'];
+            }
         }
 
         // Password baru jika diperlukan
@@ -49,11 +58,11 @@ function savePeserta($koneksi)
                         nama_ayah = '$nama_ayah', 
                         no_hp_wali = '$no_hp_wali', 
                         alamat = '$alamat',
-                        foto = IF('$foto' != '', '$foto', foto)
+                        foto = '$foto'
                       WHERE id = $id";
 
             if (mysqli_query($koneksi, $query)) {
-                // Update data akun jika ada
+                // Update data akun jika ada perubahan password atau email
                 if ($password || $email) {
                     $queryAccount = "UPDATE account SET 
                                         name = '$nama_wali', 
@@ -74,16 +83,16 @@ function savePeserta($koneksi)
 
             if (mysqli_query($koneksi, $query)) {
                 $newId = mysqli_insert_id($koneksi);
-                // Check if email already exists
+                // Cek apakah email sudah terdaftar
                 $emailCheckQuery = "SELECT * FROM account WHERE email = '$email'";
                 $emailCheckResult = mysqli_query($koneksi, $emailCheckQuery);
 
                 if (mysqli_num_rows($emailCheckResult) > 0) {
-                    // Email already exists, show an error or handle accordingly
+                    // Email sudah terdaftar, tampilkan pesan error
                     echo '<script>alert("Email sudah terdaftar. Silakan gunakan email lain."); window.history.back();</script>';
                     exit;
                 } else {
-                    // Proceed with inserting the new account
+                    // Jika email belum terdaftar, masukkan data akun
                     $queryAccount = "INSERT INTO account (id_peserta, name, email, password) 
                      VALUES ('$newId', '$nama_wali', '$email', '$password')";
 
@@ -102,3 +111,4 @@ function savePeserta($koneksi)
 
 // Panggil fungsi
 savePeserta($koneksi);
+?>

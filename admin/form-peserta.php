@@ -122,7 +122,7 @@ $formatted_no_peserta = str_pad($no_peserta, 3, '0', STR_PAD_LEFT);
                                 <div class="row mb-3">
                                     <label for="foto" class="col-sm-2 col-form-label">Foto</label>
                                     <div class="col-sm-10">
-                                        <input type="file" id="foto" name="foto" class="form-control" accept="images/*" <?= $id_peserta ? '' : ''; ?>>
+                                        <input type="file" id="foto" name="foto" class="form-control" accept="image/*" <?= $id_peserta ? '' : ''; ?>>
                                         <!-- <input type="file" id="foto" name="foto" class="form-control" accept="image/*" <?= $id_peserta ? '' : 'required'; ?>> -->
                                     </div>
                                 </div>
