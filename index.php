@@ -84,7 +84,7 @@ if (isset($_POST['update_buku'])) {
     include 'header.php';
     ?>
 
-    <section class="hero_section">
+    <!-- <section class="hero_section">
       <div class="container">
         <h2>Data Buku Tersedia</h2>
         <button class="btn btn-primary mb-3" data-toggle="modal" data-target="#modalTambah">Tambah Buku</button>
@@ -151,9 +151,9 @@ if (isset($_POST['update_buku'])) {
           </tbody>
         </table>
       </div>
-    </section>
+    </section> -->
     <!-- Modal Tambah Buku -->
-    <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog">
+    <!-- <div class="modal fade" id="modalTambah" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -180,7 +180,7 @@ if (isset($_POST['update_buku'])) {
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <section class="hero_section ">
       <div class="hero-container container">
