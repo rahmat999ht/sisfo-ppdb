@@ -4,7 +4,7 @@ require_once("../koneksi.php");
 error_reporting(0);
 
 if (!$_SESSION['admin_id']) {
-  echo '<script>alert("Anda belum login atau session login berakhir"); window.location.href="admin/login_admin.php";</script>';
+  echo '<script>alert("Anda belum login atau session login berakhir"); window.location.href="/login_admin.php";</script>';
   exit;
 }
 
